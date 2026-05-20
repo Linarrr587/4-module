@@ -3,32 +3,27 @@ from datetime import datetime
 FILE_NAME = "books.json"
 
 # Работа с файлом
-
 def load_books():
     try:
         with open(FILE_NAME, "r", encoding="utf-8") as f:
             return json.load(f)
     except (FileNotFoundError, json.JSONDecodeError):
         return []
-
 def save_books(books):
     with open(FILE_NAME, "w", encoding="utf-8") as f:
         json.dump(books, f, ensure_ascii=False, indent=4)
-
-
+        
 # Функции приложения
-
 def add_book():
     books = load_books()
     author = input("Введите автора: ").strip()
     title = input("Введите название: ").strip()
-
     # Проверка дубликатов
     for book in books:
         if book["author"].lower() == author.lower() and book["title"].lower() == title.lower():
             print("Такая книга уже есть")
             return
-
+            
     # Валидация оценки
     while True:
         try:
@@ -54,10 +49,8 @@ def add_book():
         "rating": rating,
         "date": date
     })
-
     save_books(books)
     print("Книга добавлена")
-
 def list_books():
     books = load_books()
     if not books:
